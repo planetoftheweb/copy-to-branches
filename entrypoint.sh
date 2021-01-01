@@ -4,7 +4,19 @@
 # copies the current version of 
 # certain files to each branch
 
-echo "\n\n\n\n===================================\n"
+echo "==================================="
+
+
+git status
+echo "-----------------------------------"
+
+git branch
+
+echo "-----------------------------------"
+
+ls -la
+
+echo "==================================="
 
 # Show this help screen if bad options are passed
 showHelp() {
