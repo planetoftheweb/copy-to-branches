@@ -1,0 +1,11 @@
+name: "Copy To Branches Action"
+author: "Ray Villalobos"
+description: "Copies a number files from the a 'key' branch to all branches on repository. By default, LICENSE, NOTICE and README.md will be copied from the main/master branch to all branches."
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - "-p"
+branding:
+  icon: "git-branch"
+  color: "red"
