@@ -4,8 +4,6 @@ description: "Copies a number files from the a 'key' branch to other branches on
 runs:
   using: "docker"
   image: "Dockerfile"
-  args:
-    - "-p"
 branding:
   icon: "git-branch"
   color: "red"
