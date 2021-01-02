@@ -4,6 +4,19 @@
 # copies the current version of 
 # certain files to each branch
 
+echo "==================================="
+
+
+git status
+echo "-----------------------------------"
+
+git branch -r --list|sed 's/origin\///g'
+
+echo "-----------------------------------"
+
+ls -la
+
+
 # Show this help screen if bad options are passed
 showHelp() {
    echo "Usage: $0 -k args_key -f parameter_files -b parameter_branches  -b parameter_exclude -l parameter_action"
@@ -14,6 +27,7 @@ showHelp() {
    echo "\t-l Local changes only. Don't push"
    exit 1 # Exit script after printing help
 }
+
 
 # Get the options from arguments passed to project
 while getopts "lk:f:b:e:" opt
@@ -90,19 +104,16 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
         continue
       fi
 
-    # Check out the current branch, but only if
-    # the branch is NOT the same as the key branch
-    if [ "${KEY_BRANCH}" != "${CURRENT_BRANCH}" ];
-    then
       echo "-------------------------------"
-      echo "CHECKOUT: $CURRENT_BRANCH"
+      echo "git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH"
+      
       git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
 
       # Go through each of the files
       # Check out the selected files from the source branch
       for CURRENT_FILE in ${ALL_THE_FILES[@]};
         do
-            echo "\n--COPY: $CURRENT_FILE"
+            echo "--COPY: $CURRENT_FILE"
             git checkout $KEY_BRANCH $CURRENT_FILE
         done
 
@@ -115,10 +126,19 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
         git push --set-upstream origin $CURRENT_BRANCH
       fi
 
-    fi
   done
 
 # Check out the key branch
 git checkout $KEY_BRANCH
+
+git status
+echo "-----------------------------------"
+
+git branch -r --list|sed 's/origin\///g'
+
+echo "-----------------------------------"
+
+ls -la
+
 
 echo "\n===================================\n\n\n\n"
