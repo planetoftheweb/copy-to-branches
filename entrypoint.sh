@@ -101,10 +101,11 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       # Check out the selected files from the source branch
       for CURRENT_FILE in ${ALL_THE_FILES[@]};
         do
-            echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
-            git checkout $KEY_BRANCH -- $CURRENT_FILE
-            echo "--GIT ADD $CURRENT_FILE"
-            git add $CURRENT_FILE
+            echo "--GIT RESTORE -s $KEY_BRANCH -SW -- $CURRENT_FILE"
+            git restore -s $KEY_BRANCH -SW -- $CURRENT_FILE
+
+            echo "--GIT ADD --all"
+            git add --all
         done
 
       # Commit the changes
