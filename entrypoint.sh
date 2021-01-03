@@ -93,7 +93,7 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       fi
 
       echo "-------------------------------"
-      echo "git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH"
+      echo "--GIT CHECKOUT -B $CURRENT_BRANCH ORIGIN/$CURRENT_BRANCH"
       
       git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
 
@@ -101,18 +101,20 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       # Check out the selected files from the source branch
       for CURRENT_FILE in ${ALL_THE_FILES[@]};
         do
-            echo "git checkout $KEY_BRANCH -- $CURRENT_FILE"
+            echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
             git checkout $KEY_BRANCH -- $CURRENT_FILE
+            echo "--GIT ADD $CURRENT_FILE"
+            git add $CURRENT_FILE
         done
 
       # Commit the changes
-      echo "Add and Commit: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
-      git add -A && git commit -m "Moving: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
+      echo "--COMMIT: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
+      git commit -m "Moving: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
 
       # push the branch to the repository origin
       if [ "$args_action" !=  "LOCAL" ];
       then
-        echo "PUSHING: $CURRENT_BRANCH"
+        echo "--PUSHING: $CURRENT_BRANCH"
         git push --set-upstream origin $CURRENT_BRANCH
       fi
 
