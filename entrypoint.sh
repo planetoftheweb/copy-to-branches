@@ -6,17 +6,6 @@
 
 echo "==================================="
 
-
-git status
-echo "-----------------------------------"
-
-git branch -r --list|sed 's/origin\///g'
-
-echo "-----------------------------------"
-
-ls -la
-
-
 # Show this help screen if bad options are passed
 showHelp() {
    echo "Usage: $0 -k args_key -f parameter_files -b parameter_branches  -b parameter_exclude -l parameter_action"
@@ -27,7 +16,6 @@ showHelp() {
    echo "\t-l Local changes only. Don't push"
    exit 1 # Exit script after printing help
 }
-
 
 # Get the options from arguments passed to project
 while getopts "lk:f:b:e:" opt
@@ -113,16 +101,18 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       # Check out the selected files from the source branch
       for CURRENT_FILE in ${ALL_THE_FILES[@]};
         do
-            echo "--COPY: $CURRENT_FILE"
-            git checkout $KEY_BRANCH $CURRENT_FILE
+            echo "git checkout $KEY_BRANCH -- $CURRENT_FILE"
+            git checkout $KEY_BRANCH -- $CURRENT_FILE
         done
 
       # Commit the changes
+      echo "Add and Commit: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
       git add -A && git commit -m "Moving: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
 
       # push the branch to the repository origin
       if [ "$args_action" !=  "LOCAL" ];
       then
+        echo "PUSHING: $CURRENT_BRANCH"
         git push --set-upstream origin $CURRENT_BRANCH
       fi
 
@@ -130,15 +120,5 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
 
 # Check out the key branch
 git checkout $KEY_BRANCH
-
-git status
-echo "-----------------------------------"
-
-git branch -r --list|sed 's/origin\///g'
-
-echo "-----------------------------------"
-
-ls -la
-
 
 echo "\n===================================\n\n\n\n"
