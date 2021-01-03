@@ -101,16 +101,15 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       # Check out the selected files from the source branch
       for CURRENT_FILE in ${ALL_THE_FILES[@]};
         do
-            echo "--GIT RESTORE -s $KEY_BRANCH -SW -- $CURRENT_FILE"
-            git restore -s $KEY_BRANCH -SW -- $CURRENT_FILE
-
-            echo "--GIT ADD --all"
-            git add --all
+            echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
+            git checkout $KEY_BRANCH -- $CURRENT_FILE
+            echo "--GIT ADD $CURRENT_FILE"
+            git add $CURRENT_FILE
         done
 
       # Commit the changes
-      echo "--COMMIT: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
-      git commit -m "Moving: ${ALL_THE_FILES[@]} from $KEY_BRANCH branch"
+      echo "--GIT COMMIT -M Moving files"
+      git commit -m "Moving files"
 
       # push the branch to the repository origin
       if [ "$args_action" !=  "LOCAL" ];
