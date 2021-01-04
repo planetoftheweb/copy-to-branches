@@ -62,7 +62,7 @@ fi
 # Set default list of files to copy
 if [ ! -z "${args_files}" ];
 then
-  echo "\n\n\n\n===================================\n"
+  echo "==================================="
   echo "FILES TO PROCESS: ${args_files[*]}"
 	ALL_THE_FILES=( "${args_files[@]}" )
 else
@@ -123,4 +123,4 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
 # Check out the key branch
 git checkout $KEY_BRANCH
 
-echo "\n===================================\n\n\n\n"
+echo "==================================="
