@@ -6,13 +6,27 @@
 
 echo "==================================="
 
-git config --global user.name "${INPUT_NAME}"
-git config --global user.email "${INPUT_EMAIL}"
+git config --global user.name "${github_username}"
+git config --global user.email "${github_email}"
 
- args_key = ${key}
- args_files = (${files})
- args_branches = (${branches})
- args_exclude = (${exclude})
+args_key = ${key}
+args_files = (${files})
+args_branches = (${branches})
+args_exclude = (${exclude})
+
+
+echo "${INPUT_EMAIL}"
+echo "${INPUT_NAME}"
+echo "${GITHUB_REPOSITORY_OWNER}"
+echo "${GITHUB_ACTOR}"
+echo "${GITHUB_ENV}"
+echo "${key}"
+echo "${files}"
+echo "${branches}"
+echo "${exclude}"
+echo "${github_username}"
+echo "${github_email}"
+
 
 # Set default list of branches to use
 if [ ! -z "${args_branches}" ];
