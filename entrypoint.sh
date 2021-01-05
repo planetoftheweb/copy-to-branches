@@ -1,24 +1,40 @@
-
-#!/bin/sh
+#!/bin/bash
 
 # Checks out each of your branches 
 # copies the current version of 
 # certain files to each branch
 
-GITHUB_EMAIL=${GITHUB_EMAIL}
-GITHUB_USERNAME=${GITHUB_USERNAME}
-
 echo "==================================="
 
-git config --global user.name "${GITHUB_USERNAME}"
-git config --global user.email "${GITHUB_EMAIL}"
+# Show this help screen if bad options are passed
+showHelp() {
+   echo "Usage: $0 -k args_key -f parameter_files -b parameter_branches  -b parameter_exclude -l parameter_action"
+   echo "\t-k The name of the key branch, otherwise main/master if available"
+   echo "\t-f List of files you want to copy to the branches"
+   echo "\t-b List of branches you want to copy the files to"
+   echo "\t-e List of branches you want to exclude"
+   echo "\t-l Local changes only. Don't push"
+   exit 1 # Exit script after printing help
+}
 
 # Get the options from arguments passed to project
-args_action=${ACTION}
-args_key=${KEY}
-args_files=${FILES}
-args_branches=${BRANCHES}
-args_exclude=${EXCLUDE}
+while getopts "lk:f:b:e:" opt
+do
+   case "$opt" in
+      l ) args_action=LOCAL ;;
+      k ) args_key="$OPTARG" ;;
+      f ) set -f
+          args_files=($OPTARG)
+          set +f ;;
+      b ) set -b
+          args_branches=($OPTARG)
+          set +f ;;
+      e ) set -b
+          args_exclude=($OPTARG)
+          set +f ;;
+      ? ) showHelp ;;
+   esac
+done
 
 # Set default list of branches to use
 if [ ! -z "${args_branches}" ];
@@ -46,7 +62,7 @@ fi
 # Set default list of files to copy
 if [ ! -z "${args_files}" ];
 then
-  echo "==================================="
+  echo "\n\n\n\n===================================\n"
   echo "FILES TO PROCESS: ${args_files[*]}"
 	ALL_THE_FILES=( "${args_files[@]}" )
 else
@@ -107,4 +123,4 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
 # Check out the key branch
 git checkout $KEY_BRANCH
 
-echo "==================================="
+echo "\n===================================\n\n\n\n"
