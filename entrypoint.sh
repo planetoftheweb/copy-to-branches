@@ -9,6 +9,10 @@ echo "==================================="
 git config --global user.name "${GITHUB_USERNAME}"
 git config --global user.email "${GITHUB_EMAIL}"
 
+
+ echo "--${GITHUB_REPOSITORY}"
+ echo "--${EXCLUDE}"
+
 # Show this help screen if bad options are passed
 showHelp() {
    echo "Usage: $0 -k args_key -f parameter_files -b parameter_branches  -b parameter_exclude -l parameter_action"
