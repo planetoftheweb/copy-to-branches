@@ -1,11 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 # Checks out each of your branches 
 # copies the current version of 
 # certain files to each branch
 
-GITHUB_EMAIL=${GITHUB_EMAIL}
-GITHUB_USERNAME=${GITHUB_USERNAME}
+GITHUB_EMAIL=${GITHUB_EMAIL}x}
 
 echo "## Init Git Config ##################"
 
