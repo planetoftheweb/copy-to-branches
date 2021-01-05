@@ -1,17 +1,17 @@
+
 #!/bin/bash
 
 # Checks out each of your branches 
 # copies the current version of 
 # certain files to each branch
 
-GITHUB_EMAIL=${GITHUB_EMAIL}x}
+GITHUB_EMAIL=${GITHUB_EMAIL}
+GITHUB_USERNAME=${GITHUB_USERNAME}
 
-echo "## Init Git Config ##################"
+echo "==================================="
 
 git config --global user.name "${GITHUB_USERNAME}"
 git config --global user.email "${GITHUB_EMAIL}"
-
-echo "==================================="
 
 # Get the options from arguments passed to project
 args_action=${ACTION}
