@@ -6,6 +6,9 @@
 
 echo "==================================="
 
+git config user.email "ray@planetoftheweb.com"
+git config user.name "planetoftheweb"
+
 # Show this help screen if bad options are passed
 showHelp() {
    echo "Usage: $0 -k args_key -f parameter_files -b parameter_branches  -b parameter_exclude -l parameter_action"
