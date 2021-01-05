@@ -52,47 +52,47 @@ fi
 for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
   do
 
-    # exclude certain branches from processing if the user
-    # has added a -e flag with a list of branches in quotations
-
+    # If this is one of the branches marked for exclusion
     CONTINUE_BRANCH=false
-
     for EXCLUDE_BRANCH in "${args_exclude[@]}"
       do
-        if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ]
+        if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
           CONTINUE_BRANCH=true
         fi
       done
 
-      if [ "$CONTINUE_BRANCH" = true ]
-      then 
-        continue
-      fi
+    if [ "$CONTINUE_BRANCH" = true ]
+    then
+      echo "--SKIPPING $CURRENT_BRANCH"
+      continue
+    fi
 
-      echo "-------------------------------"
-      
-      if [ "${KEY_BRANCH}" != "${CURRENT_BRANCH}" ];
-      then
-        echo "--GIT CHECKOUT -B $CURRENT_BRANCH ORIGIN/$CURRENT_BRANCH"
-        git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
+    echo "-------------------------------"
+    
+    # Check out the current branch, but only if
+    # the branch is NOT the same as the key branch
+    if [ "${KEY_BRANCH}" != "${CURRENT_BRANCH}" ];
+    then
+      echo "--GIT CHECKOUT -B $CURRENT_BRANCH ORIGIN/$CURRENT_BRANCH"
+      git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
 
-        # Go through each of the files
-        # Check out the selected files from the source branch
-        for CURRENT_FILE in ${ALL_THE_FILES[@]};
-          do
-            echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
-            git checkout $KEY_BRANCH -- $CURRENT_FILE
-          done
+      # Go through each of the files
+      # Check out the selected files from the source branch
+      for CURRENT_FILE in ${ALL_THE_FILES[@]};
+        do
+          echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
+          git checkout $KEY_BRANCH -- $CURRENT_FILE
+        done
 
-        # Commit the changes
-        echo "--GIT COMMIT -M Moving files"
-        git add -A && git commit -m "Moving files"
+      # Commit the changes
+      echo "--GIT COMMIT -M Moving files"
+      git add -A && git commit -m "Moving files"
 
-        # push the branch to the repository origin
-        echo "--PUSHING: $CURRENT_BRANCH"
-        git push --set-upstream origin $CURRENT_BRANCH
-      fi
+      # push the branch to the repository origin
+      echo "--PUSHING: $CURRENT_BRANCH"
+      git push --set-upstream origin $CURRENT_BRANCH
+    fi
   done
 
 # Check out the key branch
