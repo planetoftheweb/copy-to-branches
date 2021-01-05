@@ -23,15 +23,9 @@ do
    case "$opt" in
       l ) args_action=LOCAL ;;
       k ) args_key="$OPTARG" ;;
-      f ) set -f
-          args_files=($OPTARG)
-          set +f ;;
-      b ) set -b
-          args_branches=($OPTARG)
-          set +f ;;
-      e ) set -b
-          args_exclude=($OPTARG)
-          set +f ;;
+      f ) args_files=($OPTARG);;
+      b ) args_branches=($OPTARG);;
+      e ) args_exclude=($OPTARG);;
       ? ) showHelp ;;
    esac
 done
