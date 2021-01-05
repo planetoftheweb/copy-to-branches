@@ -4,18 +4,13 @@
 # copies the current version of 
 # certain files to each branch
 
-
 GITHUB_EMAIL=${GITHUB_EMAIL}
 GITHUB_USERNAME=${GITHUB_USERNAME}
 
 echo "## Init Git Config ##################"
-if ! git config --get user.name; then
-    git config --global user.name "${GITHUB_USERNAME}"
-fi
 
-if ! git config --get user.email; then
-    git config --global user.email "${GITHUB_EMAIL}"
-fi
+git config --global user.name "${GITHUB_USERNAME}"
+git config --global user.email "${GITHUB_EMAIL}"
 
 echo "==================================="
 
