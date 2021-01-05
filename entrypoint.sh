@@ -14,17 +14,6 @@ args_files="${files}"
 args_branches="${branches}"
 args_exclude="${exclude}"
 
-echo "INPUT EMAIL: ${INPUT_EMAIL}"
-echo "INPUT_NAME: ${INPUT_NAME}"
-echo "GITHUB_REPOSITORY_OWNER: ${GITHUB_REPOSITORY_OWNER}"
-echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-echo "key: ${key}"
-echo "files: ${files}"
-echo "branches: ${branches}"
-echo "exclude: ${exclude}"
-echo "github_username: ${github_username}"
-echo "github_email: ${github_email}"
-
 # Set default list of branches to use
 if [ ! -z "${args_branches}" ];
 then
@@ -82,26 +71,28 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       fi
 
       echo "-------------------------------"
-      echo "--GIT CHECKOUT -B $CURRENT_BRANCH ORIGIN/$CURRENT_BRANCH"
       
-      git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
+      if [ "${KEY_BRANCH}" != "${CURRENT_BRANCH}" ];
+      then
+        echo "--GIT CHECKOUT -B $CURRENT_BRANCH ORIGIN/$CURRENT_BRANCH"
+        git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
 
-      # Go through each of the files
-      # Check out the selected files from the source branch
-      for CURRENT_FILE in ${ALL_THE_FILES[@]};
-        do
-            echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
-            git checkout $KEY_BRANCH -- $CURRENT_FILE
-        done
+        # Go through each of the files
+        # Check out the selected files from the source branch
+        for CURRENT_FILE in ${ALL_THE_FILES[@]};
+          do
+              echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
+              git checkout $KEY_BRANCH -- $CURRENT_FILE
+          done
 
-      # Commit the changes
-      echo "--GIT COMMIT -M Moving files"
-      git add -A && commit -m "Moving files"
+        # Commit the changes
+        echo "--GIT COMMIT -M Moving files"
+        git add -A && git commit -m "Moving files"
 
-      # push the branch to the repository origin
-      echo "--PUSHING: $CURRENT_BRANCH"
-      git push --set-upstream origin $CURRENT_BRANCH
-
+        # push the branch to the repository origin
+        echo "--PUSHING: $CURRENT_BRANCH"
+        git push --set-upstream origin $CURRENT_BRANCH
+      fi
   done
 
 # Check out the key branch
