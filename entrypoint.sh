@@ -68,6 +68,8 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       continue
     fi
 
+    echo "========DO I CONTINUE: $CONTINUE_BRANCH"
+
     echo "-------------------------------"
     
     # Check out the current branch, but only if
