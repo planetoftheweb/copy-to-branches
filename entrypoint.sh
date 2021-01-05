@@ -6,8 +6,8 @@
 
 echo "==================================="
 
-git config --global user.name "${github_username}"
-git config --global user.email "${github_email}"
+git config --global user.name "${GITHUB_ACTOR}"
+git config --global user.email "${INPUT_EMAIL}"
 
 args_key="${key}"
 args_files="${files}"
