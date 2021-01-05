@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Checks out each of your branches 
 # copies the current version of 
