@@ -6,42 +6,13 @@
 
 echo "==================================="
 
-git config --global user.name "${GITHUB_USERNAME}"
-git config --global user.email "${GITHUB_EMAIL}"
+git config --global user.name "${INPUT_NAME}"
+git config --global user.email "${INPUT_EMAIL}"
 
-
- echo "--${GITHUB_REPOSITORY}"
- echo "--${EXCLUDE}"
-
-# Show this help screen if bad options are passed
-showHelp() {
-   echo "Usage: $0 -k args_key -f parameter_files -b parameter_branches  -b parameter_exclude -l parameter_action"
-   echo "\t-k The name of the key branch, otherwise main/master if available"
-   echo "\t-f List of files you want to copy to the branches"
-   echo "\t-b List of branches you want to copy the files to"
-   echo "\t-e List of branches you want to exclude"
-   echo "\t-l Local changes only. Don't push"
-   exit 1 # Exit script after printing help
-}
-
-# Get the options from arguments passed to project
-while getopts "lk:f:b:e:" opt
-do
-   case "$opt" in
-      l ) args_action=LOCAL ;;
-      k ) args_key="$OPTARG" ;;
-      f ) set -f
-          args_files=($OPTARG)
-          set +f ;;
-      b ) set -b
-          args_branches=($OPTARG)
-          set +f ;;
-      e ) set -b
-          args_exclude=($OPTARG)
-          set +f ;;
-      ? ) showHelp ;;
-   esac
-done
+ args_key = ${key}
+ args_files = (${files})
+ args_branches = (${branches})
+ args_exclude = (${exclude})
 
 # Set default list of branches to use
 if [ ! -z "${args_branches}" ];
@@ -110,20 +81,15 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
         do
             echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
             git checkout $KEY_BRANCH -- $CURRENT_FILE
-            echo "--GIT ADD $CURRENT_FILE"
-            git add $CURRENT_FILE
         done
 
       # Commit the changes
       echo "--GIT COMMIT -M Moving files"
-      git commit -m "Moving files"
+      git add --A && commit -m "Moving files"
 
       # push the branch to the repository origin
-      if [ "$args_action" !=  "LOCAL" ];
-      then
-        echo "--PUSHING: $CURRENT_BRANCH"
-        git push --set-upstream origin $CURRENT_BRANCH
-      fi
+      echo "--PUSHING: $CURRENT_BRANCH"
+      git push --set-upstream origin $CURRENT_BRANCH
 
   done
 
