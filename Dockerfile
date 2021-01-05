@@ -1,8 +1,6 @@
-FROM debian:9.5-slim
+FROM alpine:latest
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y git
+RUN apk --update add git
 
 COPY entrypoint.sh /entrypoint.sh
 
