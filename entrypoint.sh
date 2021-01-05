@@ -9,22 +9,21 @@ echo "==================================="
 git config --global user.name "${github_username}"
 git config --global user.email "${github_email}"
 
-args_key = "${key}"
-args_files = "${files}"
-args_branches = "${branches}"
-args_exclude  "${exclude}"
+args_key="${key}"
+args_files="${files}"
+args_branches="${branches}"
+args_exclude="${exclude}"
 
-echo "${INPUT_EMAIL}"
-echo "${INPUT_NAME}"
-echo "${GITHUB_REPOSITORY_OWNER}"
-echo "${GITHUB_ACTOR}"
-echo "${GITHUB_ENV}"
-echo "${key}"
-echo "${files}"
-echo "${branches}"
-echo "${exclude}"
-echo "${github_username}"
-echo "${github_email}"
+echo "INPUT EMAIL: ${INPUT_EMAIL}"
+echo "INPUT_NAME: ${INPUT_NAME}"
+echo "GITHUB_REPOSITORY_OWNER: ${GITHUB_REPOSITORY_OWNER}"
+echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+echo "key: ${key}"
+echo "files: ${files}"
+echo "branches: ${branches}"
+echo "exclude: ${exclude}"
+echo "github_username: ${github_username}"
+echo "github_email: ${github_email}"
 
 # Set default list of branches to use
 if [ ! -z "${args_branches}" ];
@@ -97,7 +96,7 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
 
       # Commit the changes
       echo "--GIT COMMIT -M Moving files"
-      git add --A && commit -m "Moving files"
+      git add -A && commit -m "Moving files"
 
       # push the branch to the repository origin
       echo "--PUSHING: $CURRENT_BRANCH"
