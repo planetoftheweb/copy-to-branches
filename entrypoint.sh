@@ -6,8 +6,8 @@
 
 echo "==================================="
 
-git config user.email "ray@planetoftheweb.com"
-git config user.name "planetoftheweb"
+git config --global user.name "${GITHUB_USERNAME}"
+git config --global user.email "${GITHUB_EMAIL}"
 
 # Show this help screen if bad options are passed
 showHelp() {
