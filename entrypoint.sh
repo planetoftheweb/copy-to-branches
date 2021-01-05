@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Checks out each of your branches 
 # copies the current version of 
@@ -23,9 +23,15 @@ do
    case "$opt" in
       l ) args_action=LOCAL ;;
       k ) args_key="$OPTARG" ;;
-      f ) args_files=($OPTARG);;
-      b ) args_branches=($OPTARG);;
-      e ) args_exclude=($OPTARG);;
+      f ) set -f
+          args_files=($OPTARG)
+          set +f ;;
+      b ) set -b
+          args_branches=($OPTARG)
+          set +f ;;
+      e ) set -b
+          args_exclude=($OPTARG)
+          set +f ;;
       ? ) showHelp ;;
    esac
 done
