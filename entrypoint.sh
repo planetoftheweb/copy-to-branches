@@ -56,6 +56,7 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
     CONTINUE_BRANCH=false
     for EXCLUDE_BRANCH in "${args_exclude[@]}"
       do
+        echo "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH"
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
           CONTINUE_BRANCH=true
