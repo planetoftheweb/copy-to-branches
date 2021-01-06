@@ -56,7 +56,7 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
     CONTINUE_BRANCH=false
     echo "--Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
     
-    for EXCLUDE_BRANCH in "${args_exclude[@]}"
+    for EXCLUDE_BRANCH in ( "${args_exclude[@]}" )
       do
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
