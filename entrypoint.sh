@@ -12,7 +12,7 @@ git config --global user.email "${INPUT_EMAIL}"
 args_key="${key}"
 args_files="${files}"
 args_branches="${branches}"
-args_exclude="${exclude}"
+args_exclude=( "${exclude[@]}" )
 
 # Set default list of branches to use
 if [ ! -z "${args_branches}" ];
@@ -56,7 +56,7 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
     CONTINUE_BRANCH=false
     echo "--Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
     
-    for EXCLUDE_BRANCH in ( "${args_exclude[@]}" )
+    for EXCLUDE_BRANCH in "${args_exclude[@]}"
       do
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
