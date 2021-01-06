@@ -53,18 +53,18 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
   do
 
     # If this is one of the branches marked for exclusion
-    CONTINUE_BRANCH=false
-    echo "--Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
+    CONTINUE_BRANCH=true
     
     for EXCLUDE_BRANCH in "${args_exclude[@]}"
       do
+        echo "==Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
-          CONTINUE_BRANCH=true
+          CONTINUE_BRANCH=false
         fi
       done
 
-    if [ "$CONTINUE_BRANCH" = true ]
+    if [ "$CONTINUE_BRANCH" = false ]
     then
       echo "--SKIPPING $CURRENT_BRANCH"
       continue
