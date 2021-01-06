@@ -40,7 +40,7 @@ fi
 # Set default list of files to copy
 if [ ! -z "${args_files}" ];
 then
-  echo "\n\n\n\n===================================\n"
+  echo "==================================="
   echo "FILES TO PROCESS: ${args_files[*]}"
 	ALL_THE_FILES=( "${args_files[@]}" )
 else
@@ -54,9 +54,10 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
 
     # If this is one of the branches marked for exclusion
     CONTINUE_BRANCH=false
+    echo "--Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
+    
     for EXCLUDE_BRANCH in "${args_exclude[@]}"
       do
-        echo "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH"
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
           CONTINUE_BRANCH=true
@@ -69,7 +70,7 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       continue
     fi
 
-    echo "========DO I CONTINUE: $CONTINUE_BRANCH"
+    echo "----DO I CONTINUE: $CONTINUE_BRANCH"
 
     echo "-------------------------------"
     
@@ -101,4 +102,4 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
 # Check out the key branch
 git checkout $KEY_BRANCH
 
-echo "\n===================================\n\n\n\n"
+echo "==================================="
