@@ -1,60 +1,106 @@
 # Copy To Branches Action/Shell Script
 
-This action runs a shell script in the `entrypoint.sh` file that lets you copy one or more files from a **key** branch to any other branches in your repo. By default, it copies **LICENSE**, NOTICE and README.md from the main branch to all branches on repository.
+This action runs a shell script `entrypoint.sh` file which lets you copy one or more files from a **key** branch to any other branches in your repo. By default, it copies **LICENSE**, **NOTICE** and **README.md** from the main/master branch to all branches on repository.
+
+# Running this action
+1. Go to your repo
+2. Click on the **Actions** tab
+
+![Click on Actions Tab](http://pixelprowess.com/i/2021-01-07_01-38-46.png)
+
+3. Click on the **Set up a workflow yourself** link
+
+![Set up a workflow yourself link](http://pixelprowess.com/i/2021-01-07_01-39-53.png)
+
+4. Use the following script.
+
+```yaml
+name: Copy To Branches
+on:
+  workflow_dispatch:
+jobs:
+  copy-to-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Copy To Branches Action
+        uses: planetoftheweb/copy-to-branches@v1
+```
+
+5. Click the **Start commit** button
+
+![Start Commit Button](http://pixelprowess.com/i/2021-01-07_01-49-18.png)
+
+6. Click back on the **Actions** tab
+7. Click on the **Copy To Branches** workflow
+8. Click on **Run Workflow**
+
+![](http://pixelprowess.com/i/2021-01-07_01-52-54.png)
+
+The workflow should run automatically, you can monitor it if you want to.
 
 # Optional Arguments
 
-## Key Branch `-k opts`
-This is the key branch that you're using as the origin, in other words, the branch you want to copy from. If you don't include this, it will assume that you want to use a branch called `main` or `master`.
+By default, the action will try to copy the  **LICENSE**, **NOTICE** and **README.md** files from the main/master branch to all branches, but you can modify the behavior by adding a list of arguments in an `env` variable.
 
-```bash
-sh entrypoint.sh -k BRANCHNAME
+## Example
+
+```yaml
+name: Copy To Branches
+on:
+  workflow_dispatch:
+jobs:
+  copy-to-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Copy To Branches Action
+        uses: planetoftheweb/copy-to-branches@v1
+        env:
+          exclude: work 99_target
+          files: README.md
 ```
 
-## Files to Copy `-f opts`
-By default, the script assumes you want to copy the `LICENSE`, `NOTICE` and `README.md` files. If you want to change this, you can pass along a different list of files to use instead.
+This will copy only the `README.md` file to all branches, but skip two branches, one named `work` and one called `99_target`.
 
-```
-sh entrypoint.sh -f FILENAME
-```
+## Key
+This is the key branch that you're using as the origin, in other words, the branch you want to copy from. If you don't include this, it will assume that you want to use a branch called `main` or `master` as long as either of them exist.
 
-If you want to pass more than one file, you can use a list of files in quotations.
 
-```
-sh entrypoint.sh -f "FILE01 FILE02 FILE03..."
+```yaml
+env:
+  key: 02_03b
 ```
 
-## Branches to Copy to `-b opts`
+## Files to copy
+By default, the script assumes you want to copy the `LICENSE`, `NOTICE` and `README.md` files. If you want to change this, you can pass along a different list of files to use instead. Use the `files` keyword and then pass a list of one or more branches separated by spaces.
+
+```yaml
+env:
+  files: README.md NOTICE
+```
+
+## Branches to Copy
 By default, the script assumes you want to copy the files to all the branches in the repo. If you want to copy the files to only certain branches, then you can include this option.
 
-```
-sh entrypoint.sh -b "BRANCH01 BRANCH02..."
+```yaml
+env:
+  branches: 02_03b 02_03e 02_04b
+  key: main
 ```
 
 :warning: When you add a custom branch list, if you don't include a `main` or `master` branch in your list, the script wont run because it won't have a key branch to copy to.
 
-You can easily add a key branch with the `-k` option.
+You can easily add a key branch with the `key` option.
 
-```
-sh entrypoint.sh -b "BRANCH01 BRANCH02" -k main
-```
-
-## Branches to Exclude `-e opts`
+## Branches to Exclude
 By default, the script will copy the files to all branches. You can exclude one or more branches by creating a list of branches to exclude.
 
-```
-sh entrypoint.sh -e "BRANCH01 BRANCH02"
-```
-
-## Push Branches `-p`
-The script will make the changes, but not push them to your repo. This option will set the  push the files to your repo and also set the upstream origin to the current branch.
-
-```
-sh entrypoint.sh -p
-```
-
-It uses the following command in the `entrypoint.sh` file.
-
-```
-git push --set-upstream origin $CURRENT_BRANCH
+```yaml
+env:
+  exclude: target gh-pages
 ```
