@@ -14,7 +14,7 @@ args_files="${files}"
 args_branches="${branches}"
 args_exclude="${exclude}"
 
-if [ ! -z "${args_branches}" ];
+if [ ! -z "${args_exclude}" ];
 then
   EXCLUDE_BRANCHES=( "${args_exclude[@]}" )
 fi
