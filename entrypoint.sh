@@ -55,7 +55,7 @@ fi
 for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
   do
 
-    # If this is one of the branches marked for exclusion    
+    # Exclude branches if user has specified an exclusion list    
     for EXCLUDE_BRANCH in ${EXCLUDE_BRANCHES[@]}
       do
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
@@ -70,7 +70,6 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
     # the branch is NOT the same as the key branch
     if [ "${KEY_BRANCH}" != "${CURRENT_BRANCH}" ];
     then
-      echo "--GIT CHECKOUT -B $CURRENT_BRANCH ORIGIN/$CURRENT_BRANCH"
       git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
 
       # Go through each of the files
@@ -82,11 +81,9 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
         done
 
       # Commit the changes
-      echo "--GIT COMMIT -M Moving files"
-      git add -A && git commit -m "Moving files"
+      git add -A && git commit -m "Moving files $args_files using $KEY_BRANCH"
 
       # push the branch to the repository origin
-      echo "--PUSHING: $CURRENT_BRANCH"
       git push --set-upstream origin $CURRENT_BRANCH
     fi
   done
