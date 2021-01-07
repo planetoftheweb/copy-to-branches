@@ -45,8 +45,6 @@ fi
 # Set default list of files to copy
 if [ ! -z "${args_files}" ];
 then
-  echo "==================================="
-  echo "FILES TO PROCESS: ${args_files[*]}"
 	ALL_THE_FILES=( "${args_files[@]}" )
 else
   ALL_THE_FILES=('LICENSE' 'NOTICE' 'README.md')
@@ -60,10 +58,8 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
     # If this is one of the branches marked for exclusion    
     for EXCLUDE_BRANCH in ${EXCLUDE_BRANCHES[@]}
       do
-        echo "======Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
-          echo ":::::::::SKIPPING BRANCH: $CONTINUE_BRANCH"
           continue 2
         fi
       done
