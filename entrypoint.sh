@@ -12,7 +12,12 @@ git config --global user.email "${INPUT_EMAIL}"
 args_key="${key}"
 args_files="${files}"
 args_branches="${branches}"
-args_exclude=( "${exclude[@]}" )
+args_exclude="${exclude}"
+
+if [ ! -z "${args_branches}" ];
+then
+  EXCLUDE_BRANCHES=( "${args_exclude[@]}" )
+fi
 
 # Set default list of branches to use
 if [ ! -z "${args_branches}" ];
@@ -52,25 +57,16 @@ fi
 for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
   do
 
-    # If this is one of the branches marked for exclusion
-    CONTINUE_BRANCH=true
-    
-    for EXCLUDE_BRANCH in "${args_exclude[@]}"
+    # If this is one of the branches marked for exclusion    
+    for EXCLUDE_BRANCH in ${EXCLUDE_BRANCHES[@]}
       do
-        echo "==Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
+        echo "======Current Branch: $CURRENT_BRANCH -- Exclude Branch:  $EXCLUDE_BRANCH"
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
-          CONTINUE_BRANCH=false
+          echo ":::::::::SKIPPING BRANCH: $CONTINUE_BRANCH"
+          continue[2]
         fi
       done
-
-    if [ "$CONTINUE_BRANCH" = false ]
-    then
-      echo "--SKIPPING $CURRENT_BRANCH"
-      continue
-    fi
-
-    echo "----DO I CONTINUE: $CONTINUE_BRANCH"
 
     echo "-------------------------------"
     
