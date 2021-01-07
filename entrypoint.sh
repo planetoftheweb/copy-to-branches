@@ -64,7 +64,7 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
         if [ "$CURRENT_BRANCH" = "$EXCLUDE_BRANCH" ];
         then
           echo ":::::::::SKIPPING BRANCH: $CONTINUE_BRANCH"
-          continue[2]
+          continue 2
         fi
       done
 
