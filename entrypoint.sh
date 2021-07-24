@@ -70,6 +70,9 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
     # the branch is NOT the same as the key branch
     if [ "${KEY_BRANCH}" != "${CURRENT_BRANCH}" ];
     then
+      echo "--GIT FETCH origin"
+      git fetch origin
+      echo "--GIT CHECKOUT -b $CURRENT_BRANCH origin/$CURRENT_BRANCH"
       git checkout -b $CURRENT_BRANCH origin/$CURRENT_BRANCH
 
       # Go through each of the files
