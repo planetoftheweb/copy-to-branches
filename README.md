@@ -61,15 +61,15 @@ jobs:
       - name: Copy To Branches Action
         uses: planetoftheweb/copy-to-branches@v1
         env:
+          key: main
           exclude: work 99_target
           files: README.md
 ```
 
-This will copy only the `README.md` file to all branches, but skip two branches, one named `work` and one called `99_target`.
+Using the key branch named `main` This will copy only the `README.md` file to all branches, but skip two branches, one named `work` and one called `99_target`.
 
 ## Key
-This is the key branch that you're using as the origin, in other words, the branch you want to copy from. If you don't include this, it will assume that you want to use a branch called `main` or `master` as long as either of them exist.
-
+This is the key branch that you're using as the origin, in other words, the branch you want to copy from. By default, you should include `main` here, but you can ask for a different branch to copy from. Say you wanted to copy files from the branch named `02_03b` to all branches. You would use:
 
 ```yaml
 env:
