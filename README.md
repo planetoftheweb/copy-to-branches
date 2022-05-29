@@ -1,6 +1,19 @@
 # Copy To Branches Action/Shell Script
 
-This action runs a shell script `entrypoint.sh` file which lets you copy one or more files from a **key** branch to any other branches in your repo. By default, it copies **LICENSE**, **NOTICE** and **README.md** from the main/master branch to all branches on repository.
+This action runs a shell script `entrypoint.sh` file which lets you copy one or more files from a **key** branch to any other branches in your repo. By default, it copies the following files
+
+- `LICENSE`
+- `NOTICE`
+- `README.md`
+- `CONTRIBUTING.md`
+- `./vscode/settings.json`
+- `.devcontainer/devcontainer.json`
+- `.github/CODEOWNERS`
+- `.github/ISSUE_TEMPLATE.MD`
+- `.github/PULL_REQUEST_TEMPLATE.MD`
+- `.github/workflows/main.yml`
+
+From the main/master branch to all branches on repository.
 
 # Running this action
 1. Go to your repo
@@ -26,7 +39,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Copy To Branches Action
-        uses: planetoftheweb/copy-to-branches@v1
+        uses: planetoftheweb/copy-to-branches@v1.2
+        env:
+          key: main
 ```
 
 5. Click the **Start commit** button
@@ -43,8 +58,8 @@ The workflow should run automatically, you can monitor it if you want to.
 
 # Optional Arguments
 
-By default, the action will try to copy the  **LICENSE**, **NOTICE** and **README.md** files from the main/master branch to all branches, but you can modify the behavior by adding a list of arguments in an `env` variable.
 
+By default, the action will try to copy the  **LICENSE**, **NOTICE** and **README.md** files from the `main` branch to all branches, but you can modify the behavior by adding a list of arguments in an `env` variable.
 ## Example
 
 ```yaml
@@ -69,7 +84,7 @@ jobs:
 Using the key branch named `main` This will copy only the `README.md` file to all branches, but skip two branches, one named `work` and one called `99_target`.
 
 ## Key
-This is the key branch that you're using as the origin, in other words, the branch you want to copy from. By default, you should include `main` here, but you can ask for a different branch to copy from. Say you wanted to copy files from the branch named `02_03b` to all branches. You would use:
+This is the key branch that you're using as the origin, in other words, the branch you want to copy from. By default, you should include `main`, but you can ask for a different branch to copy from. Say you wanted to copy files from the branch named `02_03b` to all branches. You would use:
 
 ```yaml
 env:

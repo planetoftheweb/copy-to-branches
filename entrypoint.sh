@@ -48,7 +48,7 @@ if [ ! -z "${args_files}" ];
 then
 	ALL_THE_FILES=( "${args_files[@]}" )
 else
-  ALL_THE_FILES=('LICENSE' 'NOTICE' 'README.md')
+  ALL_THE_FILES=('LICENSE' 'NOTICE' 'README.md' 'CONTRIBUTING.md' './vscode/settings.json' '.devcontainer/devcontainer.json' '.github/CODEOWNERS' '.github/ISSUE_TEMPLATE.MD' '.github/PULL_REQUEST_TEMPLATE.MD' '.github/workflows/main.yml')
 fi
 
 # Loop through the array of branches and perform
