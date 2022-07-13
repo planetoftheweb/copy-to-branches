@@ -80,8 +80,8 @@ for CURRENT_BRANCH in ${ALL_THE_BRANCHES[@]};
       # Check out the selected files from the source branch
       for CURRENT_FILE in ${ALL_THE_FILES[@]};
         do
-          echo "--GIT CHECKOUT $KEY_BRANCH -- $CURRENT_FILE"
-          git checkout $KEY_BRANCH -- $CURRENT_FILE
+          echo "--GIT CHECKOUT origin/$KEY_BRANCH -- $CURRENT_FILE"
+          git checkout origin/$KEY_BRANCH -- $CURRENT_FILE
         done
 
       # Commit the changes
